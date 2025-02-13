@@ -1,30 +1,29 @@
-import { expect } from '@wdio/globals'
-import LoginPage from '../pageobjects/login.page.js'
-import InventoryPage from '../pageobjects/inventory.page.js'
-import CartPage from '../pageobjects/cart.page.js'
+import loginPage from '../pageobjects/login.page.js'
+import inventoryPage from '../pageobjects/inventory.page.js'
+import cartPage from '../pageobjects/cart.page.js'
 
 
 describe('My shopping cart', () => {
     it('should save its state after logout', async () => {
-            await InventoryPage.addItemToCartByItemName('sauce-labs-backpack')
-            await expect(InventoryPage.shoppingCartBadge).toHaveText("1")
+            await inventoryPage.addItemToCartByItemName('sauce-labs-backpack')
+            await expect(inventoryPage.shoppingCartBadge).toHaveText("1")
     
-            await InventoryPage.addItemToCartByItemName('sauce-labs-bolt-t-shirt')
-            await expect(InventoryPage.shoppingCartBadge).toHaveText("2")
+            await inventoryPage.addItemToCartByItemName('sauce-labs-bolt-t-shirt')
+            await expect(inventoryPage.shoppingCartBadge).toHaveText("2")
     
-            await InventoryPage.addItemToCartByItemName('sauce-labs-onesie')
-            await expect(InventoryPage.shoppingCartBadge).toHaveText("3")
+            await inventoryPage.addItemToCartByItemName('sauce-labs-onesie')
+            await expect(inventoryPage.shoppingCartBadge).toHaveText("3")
     
-            await InventoryPage.logout()
+            await inventoryPage.logout()
     
-            await LoginPage.login('standard_user', 'secret_sauce')
-            await expect(InventoryPage.shoppingCartBadge).toHaveText("3")
+            await loginPage.login('standard_user', 'secret_sauce')
+            await expect(inventoryPage.shoppingCartBadge).toHaveText("3")
     
-            await InventoryPage.openShoppingCart()
+            await inventoryPage.openShoppingCart()
     
-            await CartPage.removeItemFromCartByItemName('sauce-labs-backpack')
-            await CartPage.removeItemFromCartByItemName('sauce-labs-bolt-t-shirt')
-            await CartPage.removeItemFromCartByItemName('sauce-labs-onesie')
+            await cartPage.removeItemFromCartByItemName('sauce-labs-backpack')
+            await cartPage.removeItemFromCartByItemName('sauce-labs-bolt-t-shirt')
+            await cartPage.removeItemFromCartByItemName('sauce-labs-onesie')
     
         })
 })

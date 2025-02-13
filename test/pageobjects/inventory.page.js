@@ -1,13 +1,6 @@
-import { $ } from '@wdio/globals'
 import Page from './page.js';
 
-/**
- * sub page containing specific selectors and methods for a specific page
- */
 class InventoryPage extends Page {
-    /**
-     * define selectors using getter methods
-     */
     get shoppingCart () {
         return $('a[data-test="shopping-cart-link"]');
     }
@@ -58,6 +51,18 @@ class InventoryPage extends Page {
 
     removeButtonByItemName (name) {
         return $(`button[data-test="remove-${name}"]`);
+    }
+
+    async clickTwitterLink () {
+        await this.twitterLink.click();
+    }
+
+    async clickFacebookLink () {
+        await this.facebookLink.click();
+    }
+
+    async clickLinkedinLink () {
+        await this.linkedinLink.click();
     }
 
     async sortBy (name) {

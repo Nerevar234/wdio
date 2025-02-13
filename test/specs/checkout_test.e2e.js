@@ -1,33 +1,32 @@
-import { browser, expect } from '@wdio/globals'
-import CartPage from '../pageobjects/cart.page.js'
-import InventoryPage from '../pageobjects/inventory.page.js'
-import CheckoutStepOnePage from '../pageobjects/checkout_step_one.page.js'
-import CheckoutStepTwoPage from '../pageobjects/checkout_step_two.page.js'
-import CheckoutCompletePage from '../pageobjects/checkout_complete.page.js'
+import cartPage from '../pageobjects/cart.page.js'
+import inventoryPage from '../pageobjects/inventory.page.js'
+import checkoutStepOnePage from '../pageobjects/checkout_step_one.page.js'
+import checkoutStepTwoPage from '../pageobjects/checkout_step_two.page.js'
+import checkoutCompletePage from '../pageobjects/checkout_complete.page.js'
 
 describe('My checkout', () => {
     it('should checkout', async () => {
-        await InventoryPage.addItemToCartByItemName('sauce-labs-backpack')
-        await InventoryPage.openShoppingCart()
+        await inventoryPage.addItemToCartByItemName('sauce-labs-backpack')
+        await inventoryPage.openShoppingCart()
 
-        await CartPage.checkoutButton.click()
+        await cartPage.clickCheckoutButton()
 
-        await CheckoutStepOnePage.enterCheckoutInfo('John', 'Doe', '12345')
-        await CheckoutStepOnePage.continueButton.click()
+        await checkoutStepOnePage.enterCheckoutInfo()
+        await checkoutStepOnePage.clickContinueButton()
 
-        await expect(CheckoutStepTwoPage.itemByName('Sauce Labs Backpack')).toBeDisplayed()
-        await expect(await CheckoutStepTwoPage.getAllItemsPricesSum()).toEqual(await CheckoutStepTwoPage.getSubtotalPrice())
-        await CheckoutStepTwoPage.finishButton.click()
+        await expect(checkoutStepTwoPage.itemByName('Sauce Labs Backpack')).toBeDisplayed()
+        await expect(await checkoutStepTwoPage.getAllItemsPricesSum()).toEqual(await checkoutStepTwoPage.getSubtotalPrice())
+        await checkoutStepTwoPage.clickFinishButton()
 
-        await CheckoutCompletePage.backHomeButton.click()
+        await checkoutCompletePage.clickBackHomeButton()
         await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
     })
 
     it('should NOT checkout with empty cart', async () => {
-        await InventoryPage.open()
-        await InventoryPage.openShoppingCart()
+        await inventoryPage.open()
+        await inventoryPage.openShoppingCart()
 
-        await CartPage.checkoutButton.click()
+        await cartPage.clickCheckoutButton()
 
         await expect(browser).not.toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
     })

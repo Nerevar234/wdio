@@ -1,43 +1,42 @@
-import { browser, expect } from '@wdio/globals'
-import LoginPage from '../pageobjects/login.page.js'
-import InventoryPage from '../pageobjects/inventory.page.js'
+import loginPage from '../pageobjects/login.page.js'
+import inventoryPage from '../pageobjects/inventory.page.js'
 
 
 describe('My Auth tests', () => {
     it('should login with valid credentials', async () => {
-        await LoginPage.open()
+        await loginPage.open()
 
-        await LoginPage.login('standard_user', 'secret_sauce')
+        await loginPage.login('standard_user', 'secret_sauce')
         await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
-        await expect(InventoryPage.shoppingCart).toBeDisplayed()
-        await expect(InventoryPage.productsLabel).toBeDisplayed()
+        await expect(inventoryPage.shoppingCart).toBeDisplayed()
+        await expect(inventoryPage.productsLabel).toBeDisplayed()
     })
 
     it('should not login with invalid password', async () => {
-        await LoginPage.open()
+        await loginPage.open()
     
-        await LoginPage.login('standard_user', 'invalid_password')
-        await expect(LoginPage.errorMessage).toBeDisplayed()
-        await expect(LoginPage.errorMessage).toHaveText('Epic sadface: Username and password do not match any user in this service')
+        await loginPage.login('standard_user', 'invalid_password')
+        await expect(loginPage.errorMessage).toBeDisplayed()
+        await expect(loginPage.errorMessage).toHaveText('Epic sadface: Username and password do not match any user in this service')
     })
     
     it('should not login with invalid login', async () => {
-        await LoginPage.open()
+        await loginPage.open()
     
-        await LoginPage.login('invalid_user', 'secret_sauce')
-        await expect(LoginPage.errorMessage).toBeDisplayed()
-        await expect(LoginPage.errorMessage).toHaveText('Epic sadface: Username and password do not match any user in this service')
+        await loginPage.login('invalid_user', 'secret_sauce')
+        await expect(loginPage.errorMessage).toBeDisplayed()
+        await expect(loginPage.errorMessage).toHaveText('Epic sadface: Username and password do not match any user in this service')
      })
     
     it('should logout', async () => {
-        await InventoryPage.open()
+        await inventoryPage.open()
     
-        await InventoryPage.logout()
+        await inventoryPage.logout()
         await expect(browser).toHaveUrl("https://www.saucedemo.com/")
-        await expect(LoginPage.inputUsername).toBeDisplayed()
-        await expect(LoginPage.inputPassword).toBeDisplayed()
+        await expect(loginPage.inputUsername).toBeDisplayed()
+        await expect(loginPage.inputPassword).toBeDisplayed()
     
-        await expect(LoginPage.inputUsername).toHaveText('')
-        await expect(LoginPage.inputPassword).toHaveText('')
+        await expect(loginPage.inputUsername).toHaveText('')
+        await expect(loginPage.inputPassword).toHaveText('')
     })
 })

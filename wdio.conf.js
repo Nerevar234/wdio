@@ -1,4 +1,4 @@
-import LoginPage from '..//wdio/test/pageobjects/login.page.js'
+import loginPage from '..//wdio/test/pageobjects/login.page.js'
 
 export const config = {
     //
@@ -202,8 +202,8 @@ export const config = {
      */
      beforeSuite: function (suite) {
             if(suite.title !== "My Auth tests") {
-                LoginPage.open()
-                LoginPage.login('standard_user', 'secret_sauce')
+                loginPage.open()
+                loginPage.login('standard_user', 'secret_sauce')
             }
         }
     /**

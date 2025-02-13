@@ -1,12 +1,6 @@
-import { $ } from '@wdio/globals'
 import Page from './page.js';
 
-
 class CheckoutStepTwoPage extends Page {
-    /**
-     * define selectors using getter methods
-     */
-
     get finishButton () {
         return $('button[data-test="finish"]');
     }
@@ -23,10 +17,9 @@ class CheckoutStepTwoPage extends Page {
         return $$('div[data-test="inventory-item-price"]');
     }
 
-    /**
-     * a method to encapsulate automation code to interact with the page
-     * e.g. to checkout
-     */
+    async clickFinishButton () {
+        await this.finishButton.click();
+    }
 
     async getAllItemsPricesSum () {
         let itemPriceLocators = await this.getAllItemsPrices();
@@ -45,9 +38,6 @@ class CheckoutStepTwoPage extends Page {
         return parseFloat(priceText.replace('Item total: $', ''));
     }
 
-    /**
-     * overwrite specific options to adapt it to page object
-     */
     open () {
         return super.open('checkout-step-two.html');
     }

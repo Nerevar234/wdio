@@ -1,12 +1,7 @@
-import { $ } from '@wdio/globals'
 import Page from './page.js';
-
+import { faker } from '@faker-js/faker';
 
 class CheckoutStepOnePage extends Page {
-    /**
-     * define selectors using getter methods
-     */
-
     get firstNameInput () {
         return $('input[data-test="firstName"]');
     }
@@ -23,20 +18,16 @@ class CheckoutStepOnePage extends Page {
         return $('input[data-test="continue"]');
     }
 
-    /**
-     * a method to encapsulate automation code to interact with the page
-     * e.g. to checkout
-     */
-
-    async enterCheckoutInfo (firstName, lastName, postalCode) {
-        await this.firstNameInput.setValue(firstName);
-        await this.lastNameInput.setValue(lastName);
-        await this.postalCodeInput.setValue(postalCode);
+    async clickContinueButton () {
+        await this.continueButton.click();
     }
 
-    /**
-     * overwrite specific options to adapt it to page object
-     */
+    async enterCheckoutInfo () {
+        await this.firstNameInput.setValue(faker.person.firstName());
+        await this.lastNameInput.setValue(faker.person.lastName());
+        await this.postalCodeInput.setValue(faker.location.zipCode());
+    }
+
     open () {
         return super.open('checkout-step-one.html');
     }
